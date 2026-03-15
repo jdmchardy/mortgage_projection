@@ -250,10 +250,10 @@ with st.sidebar:
     st.markdown("---")
 
     principal = st.number_input("Loan Amount (£)", min_value=10_000, max_value=5_000_000,
-                                 value=500_000, step=5_000, format="%d")
+                                 value=100_000, step=5_000, format="%d")
     annual_rate = st.number_input("Annual Interest Rate (%)", min_value=0.1, max_value=20.0,
                                    value=6.5, step=0.05, format="%.2f")
-    loan_years = st.selectbox("Loan Term (years)", [10, 15, 20, 25, 30], index=4)
+    loan_years = st.selectbox("Loan Term (years)", [1,2,3,4,5,6,7,8,9, 10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35], index=5)
     start_date = st.date_input("Loan Start Date", value=date.today().replace(day=1))
 
     st.markdown("---")
@@ -270,7 +270,7 @@ with st.sidebar:
     refi_rate = st.number_input("New Rate (%)", min_value=0.1, max_value=20.0,
                                  value=5.5, step=0.05, format="%.2f")
     refi_costs = st.number_input("Refinance Costs (£)", min_value=0,
-                                  max_value=50_000, value=3_000, step=500)
+                                  max_value=50_000, value=1_000, step=500)
 
 
 # ── Compute schedules ─────────────────────────────────────────────────────────
