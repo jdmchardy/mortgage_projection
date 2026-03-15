@@ -9,7 +9,7 @@ from dateutil.relativedelta import relativedelta
 
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Mortgage Intelligence",
+    page_title="Mortgage Projection",
     page_icon="🏠",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -305,8 +305,8 @@ payoff_date          = df_accel["Date"].iloc[-1]
 st.markdown(f"""
 <div class="hero">
   <div>
-    <div class="hero-title">Mortgage<br>Intelligence</div>
-    <div class="hero-sub">Loan tracker · Repayment analyser · Scenario modeller</div>
+    <div class="hero-title">Mortgage<br>Projection</div>
+    <div class="hero-sub">Loan tracking · Repayment analysis · Refinance impact</div>
   </div>
   <div class="hero-badge">
     {fmt_currency(principal)} loan<br>
