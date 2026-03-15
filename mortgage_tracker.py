@@ -657,16 +657,27 @@ with tab5:
     df_view = df_accel.copy() if "Accel" in view_option else df_base.copy()
     df_view["Date"] = df_view["Date"].apply(lambda d: d.strftime("%b %Y"))
 
-    # Highlight milestones
-    highlight_pct = st.slider("Highlight balance below (% remaining)", 0, 100, 50)
-    threshold = principal * highlight_pct / 100
+    # Milestone filter
+    filter_pct = st.slider("Show payments where balance is below (% of original loan)", 0, 100, 100)
+    threshold = principal * filter_pct / 100
 
     display_full = df_view[["Month", "Date", "Payment", "Principal", "Interest", "Extra", "Balance", "Cumulative Interest"]].copy()
+    filtered = display_full[display_full["Balance"] <= threshold].copy()
+
+    first_month = int(filtered["Month"].iloc[0]) if not filtered.empty else None
+    if filter_pct < 100 and first_month:
+        st.markdown(
+            f'''<div style="font-family:'DM Mono',monospace; font-size:0.8rem; padding:0.6rem 1rem;
+            background:var(--cream); border-left:3px solid var(--sage); margin-bottom:0.8rem;">
+            Balance first drops below <strong>£{threshold:,.0f}</strong> ({filter_pct}%) at
+            <strong>month {first_month}</strong> — {filtered["Date"].iloc[0]}
+            </div>''', unsafe_allow_html=True)
+
     for col in ["Payment", "Principal", "Interest", "Extra", "Balance", "Cumulative Interest"]:
-        display_full[col] = display_full[col].apply(lambda v: f"£{v:,.0f}")
+        filtered[col] = filtered[col].apply(lambda v: f"£{v:,.0f}")
 
-    st.dataframe(display_full, use_container_width=True, hide_index=True, height=500)
-
+    st.dataframe(filtered, use_container_width=True, hide_index=True, height=500)
+    
     # CSV download
     csv = df_view.to_csv(index=False)
     st.download_button(
